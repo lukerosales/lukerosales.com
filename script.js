@@ -27,9 +27,6 @@ const TRANSACTIONS = [
   { date: '2026-04-07', desc: 'Interest charged — business cards',    amount: 221,  type: 'interest' },
 ];
 
-/* Beehiiv config — fill in PUBLICATION_ID (and see note in README) */
-const BEEHIIV_ENDPOINT = 'https://api.beehiiv.com/v2/publications/PUBLICATION_ID/subscriptions';
-
 /* ================= HELPERS ================= */
 const $ = (sel) => document.querySelector(sel);
 
@@ -112,18 +109,12 @@ function renderLedger() {
 
 /* ================= EMAIL FORMS ================= */
 async function subscribe(email, source) {
-  const res = await fetch(BEEHIIV_ENDPOINT, {
+  const body = { email, source };
+  if (source === 'debt-wars-early') body.tag = 'debt-wars-early';
+  const res = await fetch('/api/subscribe', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      email,
-      reactivate_existing: false,
-      send_welcome_email: false,
-      utm_source: source,
-      custom_fields: source === 'debt-wars-early'
-        ? [{ name: 'tag', value: 'debt-wars-early' }]
-        : [],
-    }),
+    body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error('subscribe failed');
 }
