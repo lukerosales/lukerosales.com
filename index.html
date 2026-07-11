@@ -17,13 +17,32 @@
   <a class="nav-brand" href="#top">luke<span>rosales</span>.com</a>
 </nav>
 
-<!-- 2. HERO -->
+<!-- 2. PEOPLE -->
+<section class="section" id="people">
+  <p class="section-label">The People</p>
+  <h2>Who's in the foxhole.</h2>
+  <p class="section-sub">Nobody wins alone. These are the people in this with me.</p>
+  <div class="people-grid">
+    <div class="person-card">
+      <p class="person-name">Add Name</p>
+      <p class="person-role">Role / How They Help</p>
+      <p class="person-desc">Short description of who this person is and what they mean to the mission.</p>
+    </div>
+    <div class="person-card">
+      <p class="person-name">Add Name</p>
+      <p class="person-role">Role / How They Help</p>
+      <p class="person-desc">Short description of who this person is and what they mean to the mission.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. HERO -->
 <header class="hero" id="top">
   <p class="eyebrow">@ljrbuilds — building in public ⚔️</p>
   <img class="hero-photo" src="assets/luke.jpg" alt="Luke Rosales">
   <h1>Strength and Honor</h1>
   <p class="hero-sub">22. $52,000 in debt. Getting to zero — publicly.</p>
-  <a class="btn btn-primary" href="#debt">See The Numbers</a>
+  <a class="btn btn-primary" href="#hub">See The Numbers</a>
 </header>
 
 <!-- 4. ABOUT -->
@@ -34,47 +53,119 @@
   <p class="about-sign">Strength and honor — always.</p>
 </section>
 
-<!-- 5. THE LEDGER -->
-<section class="ledger" id="debt">
-  <div class="ledger-header"><span class="rule"></span><span class="ledger-title">T H E &nbsp; L E D G E R</span><span class="rule"></span></div>
-
-  <div class="live-bar">
-    <span class="live-left">
-      <span class="live-dot"></span>
-      <span class="live-label">LIVE</span>
-      <span class="live-updated">Last updated <span id="last-updated"></span></span>
-    </span>
-    <span class="delta-badge" id="delta-badge"></span>
+<!-- 5. HUB TABS: LEDGER | SOCIALS | AFFILIATES | VIDEOS -->
+<section class="hub" id="hub">
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="ledger">Ledger</button>
+    <button class="tab-btn" data-tab="socials">Socials</button>
+    <button class="tab-btn" data-tab="affiliates">Affiliates</button>
+    <button class="tab-btn" data-tab="videos">Videos</button>
   </div>
 
-  <div class="ledger-top">
-    <div class="ledger-main">
-      <p class="owed-label">still owed —</p>
-      <p class="debt-number" id="debt-number">$0</p>
-      <p class="debt-context">STARTED $71,000 SEPT 2024 → <span class="green" id="paid-off"></span> paid off</p>
+  <!-- LEDGER TAB -->
+  <div class="tab-pane active" id="tab-ledger">
+    <div class="ledger-inner">
+      <div class="ledger-header"><span class="rule"></span><span class="ledger-title">T H E &nbsp; L E D G E R</span><span class="rule"></span></div>
+
+      <div class="live-bar">
+        <span class="live-left">
+          <span class="live-dot"></span>
+          <span class="live-label">LIVE</span>
+          <span class="live-updated">Last updated <span id="last-updated"></span></span>
+        </span>
+        <span class="delta-badge" id="delta-badge"></span>
+      </div>
+
+      <div class="ledger-top">
+        <div class="ledger-main">
+          <p class="owed-label">still owed —</p>
+          <p class="debt-number" id="debt-number">$0</p>
+          <p class="debt-context">STARTED $71,000 SEPT 2024 → <span class="green" id="paid-off"></span> paid off</p>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+          <span class="progress-pct" id="progress-pct"></span>
+        </div>
+        <div class="progress-labels">
+          <span>$71,000 — SEPT 2024</span>
+          <span>TODAY</span>
+          <span>$0 — DEC 31, 2026</span>
+        </div>
+      </div>
+
+      <div class="cards-section">
+        <p class="mini-label">BREAKDOWN BY CARD</p>
+        <div id="card-rows"></div>
+      </div>
+
+      <div class="txn-section">
+        <p class="mini-label">RECENT ACTIVITY</p>
+        <div id="txn-rows"></div>
+      </div>
     </div>
   </div>
 
-  <div class="progress-wrap">
-    <div class="progress-track">
-      <div class="progress-fill" id="progress-fill"></div>
-      <span class="progress-pct" id="progress-pct"></span>
-    </div>
-    <div class="progress-labels">
-      <span>$71,000 — SEPT 2024</span>
-      <span>TODAY</span>
-      <span>$0 — DEC 31, 2026</span>
+  <!-- SOCIALS TAB -->
+  <div class="tab-pane" id="tab-socials">
+    <div class="link-stack">
+      <a class="link-row" href="https://www.instagram.com/ljrbuilds/" target="_blank" rel="noopener">
+        <span class="link-platform">Instagram</span>
+        <span class="link-arrow">@ljrbuilds →</span>
+      </a>
+      <a class="link-row" href="https://www.tiktok.com/@ljr.builds" target="_blank" rel="noopener">
+        <span class="link-platform">TikTok</span>
+        <span class="link-arrow">@ljr.builds →</span>
+      </a>
+      <a class="link-row" href="https://www.youtube.com/@ljrbuilds" target="_blank" rel="noopener">
+        <span class="link-platform">YouTube</span>
+        <span class="link-arrow">@ljrbuilds →</span>
+      </a>
+      <a class="link-row" href="https://www.snapchat.com/add/ljrbuilds" target="_blank" rel="noopener">
+        <span class="link-platform">Snapchat</span>
+        <span class="link-arrow">ljrbuilds →</span>
+      </a>
+      <a class="link-row" href="#war-chest">
+        <span class="link-platform">War Chest</span>
+        <span class="link-arrow">unlock the numbers →</span>
+      </a>
+      <a class="link-row" href="#debt-wars">
+        <span class="link-platform">Debt Wars</span>
+        <span class="link-arrow">get early access →</span>
+      </a>
     </div>
   </div>
 
-  <div class="cards-section">
-    <p class="mini-label">BREAKDOWN BY CARD</p>
-    <div id="card-rows"></div>
+  <!-- AFFILIATES TAB -->
+  <div class="tab-pane" id="tab-affiliates">
+    <p class="section-sub" style="margin-bottom: 20px;">Everything I actually use. Some are affiliate links.</p>
+    <div class="arsenal-grid">
+      <div class="arsenal-card">
+        <p class="arsenal-name">WHOOP</p>
+        <p class="arsenal-desc">The only fitness tracker I trust.</p>
+        <a class="btn btn-outline" href="#" rel="sponsored noopener" target="_blank">Get It →</a>
+      </div>
+      <div class="arsenal-card">
+        <p class="arsenal-name">Notion</p>
+        <p class="arsenal-desc">Where I run my whole life.</p>
+        <a class="btn btn-outline" href="#" rel="sponsored noopener" target="_blank">Get It →</a>
+      </div>
+      <div class="arsenal-card">
+        <p class="arsenal-name">Beehiiv</p>
+        <p class="arsenal-desc">Building the email list here.</p>
+        <a class="btn btn-outline" href="#" rel="sponsored noopener" target="_blank">Get It →</a>
+      </div>
+    </div>
   </div>
 
-  <div class="txn-section">
-    <p class="mini-label">RECENT ACTIVITY</p>
-    <div id="txn-rows"></div>
+  <!-- VIDEOS TAB -->
+  <div class="tab-pane" id="tab-videos">
+    <div class="video-stack">
+      <div class="video-frame"><iframe src="https://www.youtube.com/embed/y4hyopTnwx8" title="Luke Rosales video" loading="lazy" allowfullscreen></iframe></div>
+      <div class="video-frame"><iframe src="https://www.youtube.com/embed/OuOyklOyymI" title="Luke Rosales video" loading="lazy" allowfullscreen></iframe></div>
+    </div>
   </div>
 </section>
 
@@ -117,92 +208,7 @@
   <p class="dw-caption">Early access. No spam.</p>
 </section>
 
-<!-- 8. PEOPLE -->
-<section class="section" id="people">
-  <p class="section-label">The People</p>
-  <h2>Who's in the foxhole.</h2>
-  <p class="section-sub">Nobody wins alone. These are the people in this with me.</p>
-  <div class="people-grid">
-    <div class="person-card">
-      <p class="person-name">Add Name</p>
-      <p class="person-role">Role / How They Help</p>
-      <p class="person-desc">Short description of who this person is and what they mean to the mission.</p>
-    </div>
-    <div class="person-card">
-      <p class="person-name">Add Name</p>
-      <p class="person-role">Role / How They Help</p>
-      <p class="person-desc">Short description of who this person is and what they mean to the mission.</p>
-    </div>
-  </div>
-</section>
-
-<!-- 8. HUB TABS -->
-<section class="hub" id="hub">
-  <div class="tab-nav">
-    <button class="tab-btn active" data-tab="socials">Socials</button>
-    <button class="tab-btn" data-tab="affiliates">Affiliates</button>
-    <button class="tab-btn" data-tab="videos">Videos</button>
-  </div>
-
-  <div class="tab-pane active" id="tab-socials">
-    <div class="link-stack">
-      <a class="link-row" href="https://www.instagram.com/ljrbuilds/" target="_blank" rel="noopener">
-        <span class="link-platform">Instagram</span>
-        <span class="link-arrow">@ljrbuilds →</span>
-      </a>
-      <a class="link-row" href="https://www.tiktok.com/@ljr.builds" target="_blank" rel="noopener">
-        <span class="link-platform">TikTok</span>
-        <span class="link-arrow">@ljr.builds →</span>
-      </a>
-      <a class="link-row" href="https://www.youtube.com/@ljrbuilds" target="_blank" rel="noopener">
-        <span class="link-platform">YouTube</span>
-        <span class="link-arrow">@ljrbuilds →</span>
-      </a>
-      <a class="link-row" href="https://www.snapchat.com/add/ljrbuilds" target="_blank" rel="noopener">
-        <span class="link-platform">Snapchat</span>
-        <span class="link-arrow">ljrbuilds →</span>
-      </a>
-      <a class="link-row" href="#war-chest">
-        <span class="link-platform">War Chest</span>
-        <span class="link-arrow">unlock the numbers →</span>
-      </a>
-      <a class="link-row" href="#debt-wars">
-        <span class="link-platform">Debt Wars</span>
-        <span class="link-arrow">get early access →</span>
-      </a>
-    </div>
-  </div>
-
-  <div class="tab-pane" id="tab-affiliates">
-    <p class="section-sub" style="margin-bottom: 20px;">Everything I actually use. Some are affiliate links.</p>
-    <div class="arsenal-grid">
-      <div class="arsenal-card">
-        <p class="arsenal-name">WHOOP</p>
-        <p class="arsenal-desc">The only fitness tracker I trust.</p>
-        <a class="btn btn-outline" href="#" rel="sponsored noopener" target="_blank">Get It →</a>
-      </div>
-      <div class="arsenal-card">
-        <p class="arsenal-name">Notion</p>
-        <p class="arsenal-desc">Where I run my whole life.</p>
-        <a class="btn btn-outline" href="#" rel="sponsored noopener" target="_blank">Get It →</a>
-      </div>
-      <div class="arsenal-card">
-        <p class="arsenal-name">Beehiiv</p>
-        <p class="arsenal-desc">Building the email list here.</p>
-        <a class="btn btn-outline" href="#" rel="sponsored noopener" target="_blank">Get It →</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="tab-pane" id="tab-videos">
-    <div class="video-stack">
-      <div class="video-frame"><iframe src="https://www.youtube.com/embed/y4hyopTnwx8" title="Luke Rosales video" loading="lazy" allowfullscreen></iframe></div>
-      <div class="video-frame"><iframe src="https://www.youtube.com/embed/OuOyklOyymI" title="Luke Rosales video" loading="lazy" allowfullscreen></iframe></div>
-    </div>
-  </div>
-</section>
-
-<!-- 9. FOOTER EMAIL + FOOTER -->
+<!-- 8. FOOTER EMAIL + FOOTER -->
 <section class="footer-capture">
   <p class="footer-capture-text">The Weekly Debt Journal — real numbers, every Sunday.</p>
   <form class="email-form" data-source="footer">

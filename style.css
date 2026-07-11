@@ -457,6 +457,12 @@ h2 {
   border-bottom: 1px solid var(--border);
   padding: 0 28px 28px;
 }
+.ledger-inner {
+  border-top: 3px solid var(--red);
+  background: var(--surface);
+  margin: 0 -28px;
+  padding: 40px 28px;
+}
 
 /* ============ PEOPLE ============ */
 .people-grid { display: grid; gap: 18px; margin-top: 24px; }
