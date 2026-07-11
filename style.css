@@ -451,6 +451,25 @@ h2 {
 .form-msg.ok { color: var(--green); }
 .form-msg.err { color: var(--red); }
 
+/* ============ HUB ============ */
+.hub {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px 28px;
+}
+
+/* ============ PEOPLE ============ */
+.people-grid { display: grid; gap: 18px; margin-top: 24px; }
+@media (min-width: 520px) { .people-grid { grid-template-columns: 1fr 1fr; } }
+.person-card {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 24px 20px;
+}
+.person-name { font-family: var(--cond); font-weight: 700; font-size: 22px; margin-bottom: 4px; }
+.person-role { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 12px; }
+.person-desc { font-size: 12px; color: var(--muted); line-height: 1.7; }
+
 /* ============ TABS ============ */
 .tab-nav {
   display: flex;
