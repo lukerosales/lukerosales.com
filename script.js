@@ -132,10 +132,8 @@ function wireForms() {
       try {
         await subscribe(email, source);
         if (source === 'war-chest') {
-          document.getElementById('warchest-overlay').style.display = 'none';
-          document.querySelector('.warchest-blur').style.filter = 'none';
-          document.querySelector('.warchest-blur').style.userSelect = 'auto';
-          document.getElementById('warchest-success').hidden = false;
+          localStorage.setItem('warchest_unlocked', '1');
+          unlockWarChest();
         } else if (msg) {
           msg.textContent = source === 'debt-wars-early'
             ? "You're on the list. ⚔️"
@@ -172,7 +170,22 @@ function wireTabs() {
   });
 }
 
+/* ================= WAR CHEST UNLOCK ================= */
+function unlockWarChest() {
+  const overlay = document.getElementById('warchest-overlay');
+  const blur = document.querySelector('.warchest-blur');
+  const success = document.getElementById('warchest-success');
+  if (overlay) overlay.style.display = 'none';
+  if (blur) { blur.style.filter = 'none'; blur.style.userSelect = 'auto'; }
+  if (success) success.hidden = false;
+}
+
+function checkWarChestUnlock() {
+  if (localStorage.getItem('warchest_unlocked') === '1') unlockWarChest();
+}
+
 /* ================= INIT ================= */
 renderLedger();
 wireForms();
 wireTabs();
+checkWarChestUnlock();
