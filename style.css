@@ -636,7 +636,7 @@ h2 {
   align-items: center;
   text-align: center;
 }
-.footer-capture-text { font-size: 13px; margin-bottom: 18px; }
+.footer-capture-text { font-size: 13px; margin-bottom: 12px; max-width: 480px; }
 .footer {
   border-top: 1px solid var(--border);
   padding: 28px;
