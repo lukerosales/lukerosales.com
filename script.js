@@ -78,7 +78,7 @@ function renderLedger() {
     const cardPct = Math.round((paid / c.limit) * 100);
     return `<div class="card-row${c.closed ? ' card-row--closed' : ''}">
       <div class="card-row-top">
-        <span class="card-name">${c.name}${c.apr != null && !c.closed ? ` <span class="card-apr">${c.apr}% APR</span>` : ''}</span>
+        <span class="card-name">${c.name}${c.apr != null ? ` <span class="card-apr">${c.apr}% APR</span>` : ''}</span>
         <span class="card-type">${c.closed ? 'CLOSED ✓' : c.type}</span>
       </div>
       <div class="card-bar-wrap">
