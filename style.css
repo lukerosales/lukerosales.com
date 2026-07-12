@@ -118,7 +118,7 @@ h2 {
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--blue);
-  filter: grayscale(0.35);
+  filter: saturate(1.25) contrast(1.05);
   margin-bottom: 24px;
 }
 .hero h1 {
