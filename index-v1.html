@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luke Rosales — Strength and Honor</title>
+<meta name="description" content="22. $52,000 in debt. Getting to zero — publicly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Barlow+Condensed:ital,wght@0,600;0,700;1,900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>:root{--bg:#ffffff;--surface:#f4f7fb;--surface2:#eaf0f8;--border:#d1d9e0;--text:#0a0a0a;--muted:#64748b;--red:#dc2626;--green:#16a34a;--blue:#2563eb;}</style>
+</head>
+<body>
+
+<!-- 1. NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="#top">luke<span>rosales</span>.com</a>
+  <a class="nav-cta" href="#war-chest">Join the Journey</a>
+</nav>
+
+<!-- 2. HERO -->
+<header class="hero" id="top">
+  <p class="eyebrow">@ljrbuilds — building in public ⚔️</p>
+  <img class="hero-photo" src="assets/luke.jpg" alt="Luke Rosales">
+  <h1>Strength and Honor</h1>
+  <p class="hero-sub">22. $52,000 in debt. Getting to zero — publicly.</p>
+  <a class="btn btn-primary" href="#debt">See The Numbers</a>
+</header>
+
+<!-- 3. ABOUT -->
+<section class="section" id="about">
+  <p class="section-label">Who I Am</p>
+  <h2>The real story.</h2>
+  <p class="about-para">I'm not trying to be famous. I'm trying to be great. I went into $71,000 of debt building a business at 21. I'm paying it off publicly, with a camera on me, because I want every person in that same hole to know it's possible. No finance degree. No trust fund. Just the work.</p>
+  <div class="fact-rows">
+    <div class="fact-row"><span class="fact-num red">$71,000</span><span class="fact-note">started Sept 2024</span></div>
+    <div class="fact-row"><span class="fact-num red">$52,000</span><span class="fact-note">still owed today</span></div>
+    <div class="fact-row"><span class="fact-num green">$0</span><span class="fact-note">the only finish line</span></div>
+  </div>
+  <p class="about-sign">Strength and honor — always.</p>
+</section>
+
+<!-- 4. MY PROOF -->
+<section class="section" id="proof">
+  <p class="section-label">My Proof</p>
+  <h2>It's real.</h2>
+  <p class="section-sub">Real statements. Real numbers. Every payment documented.</p>
+  <div class="proof-grid">
+    <figure class="proof-item">
+      <div class="proof-img-slot"></div>
+      <figcaption>Chase Business Ink — May 2026</figcaption>
+    </figure>
+    <figure class="proof-item">
+      <div class="proof-img-slot"></div>
+      <figcaption>Amex — May 2026</figcaption>
+    </figure>
+    <figure class="proof-item">
+      <div class="proof-img-slot"></div>
+      <figcaption>Payment receipt — $765</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 5. THE LEDGER -->
+<section class="ledger" id="debt">
+  <div class="ledger-header"><span class="rule"></span><span class="ledger-title">T H E &nbsp; L E D G E R</span><span class="rule"></span></div>
+
+  <div class="live-bar">
+    <span class="live-left">
+      <span class="live-dot"></span>
+      <span class="live-label">LIVE</span>
+      <span class="live-updated">Last updated <span id="last-updated"></span></span>
+    </span>
+    <span class="delta-badge" id="delta-badge"></span>
+  </div>
+
+  <div class="ledger-top">
+    <div class="ledger-main">
+      <p class="owed-label">still owed —</p>
+      <p class="debt-number" id="debt-number">$0</p>
+      <p class="debt-context">STARTED $71,000 SEPT 2024 → <span class="green" id="paid-off"></span> paid off</p>
+    </div>
+    <div class="ledger-stats" id="ledger-stats"></div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+      <span class="progress-pct" id="progress-pct"></span>
+    </div>
+    <div class="progress-labels">
+      <span>$71,000 — SEPT 2024</span>
+      <span>TODAY</span>
+      <span>$0 — DEC 31, 2026</span>
+    </div>
+  </div>
+
+  <div class="cards-section">
+    <p class="mini-label">BREAKDOWN BY CARD</p>
+    <div id="card-rows"></div>
+  </div>
+
+  <div class="txn-section">
+    <p class="mini-label">RECENT ACTIVITY</p>
+    <div id="txn-rows"></div>
+  </div>
+</section>
+
+<!-- 6. WAR CHEST -->
+<section class="warchest" id="war-chest">
+  <p class="section-label">War Chest</p>
+  <h2>The inside numbers.</h2>
+  <p class="section-sub">Income. Expenses. Daily cash flow. Stuff I don't post.</p>
+
+  <div class="warchest-box">
+    <div class="warchest-blur" aria-hidden="true">
+      <div class="wc-stat"><span class="wc-label">Income This Month</span><span class="wc-value">$4,850</span></div>
+      <div class="wc-stat"><span class="wc-label">Biggest Expense</span><span class="wc-value">Interest</span></div>
+      <div class="wc-stat"><span class="wc-label">Daily Cash Flow</span><span class="wc-value">+$38 / day</span></div>
+    </div>
+    <div class="warchest-overlay" id="warchest-overlay">
+      <div class="lock-icon">🔒</div>
+      <p class="unlock-title">Unlock the numbers.</p>
+      <p class="unlock-sub">One email. No spam. Real updates every Sunday.</p>
+      <form class="email-form" data-source="war-chest">
+        <input type="email" name="email" placeholder="you@email.com" required>
+        <button type="submit" class="btn btn-primary">Get Access</button>
+      </form>
+      <p class="form-msg" hidden></p>
+    </div>
+    <p class="warchest-success" id="warchest-success" hidden>You're in. Numbers drop Sunday. ⚔️</p>
+  </div>
+</section>
+
+<!-- 7. THE ARSENAL -->
+<section class="section" id="arsenal">
+  <p class="section-label">The Arsenal</p>
+  <h2>What I actually use.</h2>
+  <p class="section-sub">Every link is something I actually use. Some are affiliate links.</p>
+  <div class="arsenal-grid">
+    <div class="arsenal-card">
+      <p class="arsenal-name">WHOOP</p>
+      <p class="arsenal-desc">The only fitness tracker I trust.</p>
+      <a class="btn btn-outline" href="#" rel="sponsored noopener" target="_blank">Get It →</a>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-name">Notion</p>
+      <p class="arsenal-desc">Where I run my whole life.</p>
+      <a class="btn btn-outline" href="#" rel="sponsored noopener" target="_blank">Get It →</a>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-name">Beehiiv</p>
+      <p class="arsenal-desc">Building the email list here.</p>
+      <a class="btn btn-outline" href="#" rel="sponsored noopener" target="_blank">Get It →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 8. DEBT WARS TEASER -->
+<section class="debtwars" id="debt-wars">
+  <p class="dw-eyebrow">COMING SOON</p>
+  <h2 class="dw-title">Debt Wars.</h2>
+  <p class="dw-sub">Your debt. Gamified. Turned into a war you can actually win.</p>
+  <form class="email-form dw-form" data-source="debt-wars-early">
+    <input type="email" name="email" placeholder="you@email.com" required>
+    <button type="submit" class="btn btn-light">I'm In</button>
+  </form>
+  <p class="form-msg" hidden></p>
+  <p class="dw-caption">Early access. No spam.</p>
+</section>
+
+<!-- 9. VIDEOS -->
+<section class="section" id="videos">
+  <p class="section-label">The Series</p>
+  <h2>Watch the journey.</h2>
+  <div class="video-stack">
+    <div class="video-frame"><iframe src="https://www.youtube.com/embed/y4hyopTnwx8" title="Luke Rosales video" loading="lazy" allowfullscreen></iframe></div>
+    <div class="video-frame"><iframe src="https://www.youtube.com/embed/OuOyklOyymI" title="Luke Rosales video" loading="lazy" allowfullscreen></iframe></div>
+  </div>
+</section>
+
+<!-- 10. SOCIALS -->
+<section class="section" id="socials">
+  <p class="section-label">Follow the Journey</p>
+  <h2>Find me everywhere.</h2>
+  <div class="social-grid">
+    <a class="social-btn" href="https://www.instagram.com/ljrbuilds/" target="_blank" rel="noopener"><span class="social-name">Instagram</span><span class="social-handle">@ljrbuilds</span></a>
+    <a class="social-btn" href="https://www.tiktok.com/@ljr.builds" target="_blank" rel="noopener"><span class="social-name">TikTok</span><span class="social-handle">@ljr.builds</span></a>
+    <a class="social-btn" href="https://www.youtube.com/@ljrbuilds" target="_blank" rel="noopener"><span class="social-name">YouTube</span><span class="social-handle">@ljrbuilds</span></a>
+    <a class="social-btn" href="https://www.snapchat.com/add/ljrbuilds" target="_blank" rel="noopener"><span class="social-name">Snapchat</span><span class="social-handle">ljrbuilds</span></a>
+  </div>
+</section>
+
+<!-- 11. FOOTER EMAIL + FOOTER -->
+<section class="footer-capture">
+  <p class="footer-capture-text">The Weekly Debt Journal — real numbers, every Sunday.</p>
+  <form class="email-form" data-source="footer">
+    <input type="email" name="email" placeholder="you@email.com" required>
+    <button type="submit" class="btn btn-primary">Subscribe</button>
+  </form>
+  <p class="form-msg" hidden></p>
+</section>
+
+<footer class="footer">
+  <p>© 2026 Luke Rosales · @ljrbuilds</p>
+  <p>Strength and honor.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -204,7 +204,7 @@ function wireCopyCodes() {
 async function init() {
   let data = FALLBACK;
   try {
-    const res = await fetch('/data.json?t=' + Date.now());
+    const res = await fetch('/api/data');
     if (res.ok) data = { ...FALLBACK, ...(await res.json()) };
   } catch {}
   renderLedger(data);

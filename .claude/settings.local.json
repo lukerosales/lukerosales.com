@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(ps -p 24001 -o pid,ppid,etime,command)",
+      "Bash(chromium-cli --session lukerosales)",
+      "Bash(open http://localhost:3000)",
+      "mcp__firecrawl__firecrawl_search",
+      "Bash(grep -oP '“[^”]{15,250}”' \"/Users/lukerosales/.claude/projects/-Users-lukerosales-lukerosales-com/8f5735ae-abde-4328-9035-5a39eeb93134/tool-results/mcp-firecrawl-firecrawl_search-1781082986812.txt\")"
+    ]
+  }
+}
