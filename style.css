@@ -318,6 +318,8 @@ h2 {
 
 .cards-section { margin-bottom: 38px; animation: floatIn 0.5s ease 0.40s both; }
 .card-row { padding: 13px 0; border-bottom: 1px solid var(--border); }
+.card-row--closed { opacity: 0.55; }
+.card-row--closed .card-type { color: var(--green); border-color: var(--green); }
 .card-row-top {
   display: flex;
   align-items: center;

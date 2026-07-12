@@ -11,6 +11,7 @@ const CARDS = [
   { name: 'Chase Sapphire Preferred', type: 'Personal', balance:  4183.66, min:  95, limit:  5000 },
   { name: 'Blue Business Cash',       type: 'Business', balance:  1176.85, min:  45, limit: 10000 },
   { name: 'Amex Gold',                type: 'Personal', balance:   729.59, min:  30, limit:  1500 },
+  { name: 'Members Cash Rewards',    type: 'Personal', balance:     0.00, min:   0, limit:  3500, closed: true },
 ];
 
 const TRANSACTIONS = [
@@ -74,10 +75,10 @@ function renderLedger() {
   $('#card-rows').innerHTML = CARDS.map((c) => {
     const paid = Math.max(0, c.limit - c.balance);
     const cardPct = Math.round((paid / c.limit) * 100);
-    return `<div class="card-row">
+    return `<div class="card-row${c.closed ? ' card-row--closed' : ''}">
       <div class="card-row-top">
         <span class="card-name">${c.name}</span>
-        <span class="card-type">${c.type}</span>
+        <span class="card-type">${c.closed ? 'CLOSED ✓' : c.type}</span>
       </div>
       <div class="card-bar-wrap">
         <div class="card-bar"><div class="card-bar-fill" style="width:${cardPct}%"></div></div>
