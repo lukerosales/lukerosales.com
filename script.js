@@ -11,6 +11,7 @@ const CARDS = [
   { name: 'Chase Sapphire Preferred', type: 'Personal', balance:  4183.66, min:  95, limit:  5000, apr: 6.00  },
   { name: 'Blue Business Cash',       type: 'Business', balance:  1176.85, min:  45, limit: 10000, apr: 5.00  },
   { name: 'Amex Gold',                type: 'Personal', balance:   729.59, min:  30, limit:  1500, apr: 5.00  },
+  { name: 'Member First (Secured)',   type: 'Personal', balance:     0.00, min:   0, limit:   250, apr: 14.29, closed: true },
   { name: 'Members Cash Rewards',     type: 'Personal', balance:     0.00, min:   0, limit:  3500, apr: 20.29, closed: true },
 ];
 
