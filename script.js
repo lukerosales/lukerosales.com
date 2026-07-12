@@ -1,33 +1,35 @@
-/* ================= DATA ================= */
-const START_DEBT   = 71000;
-const CURRENT_DEBT = 53336.68;
-const PREV_DEBT    = 54183.66;
-const LAST_UPDATED = '2026-05-29';
-const GOAL_DATE    = new Date('2026-12-31');
+/* ================= GOAL ================= */
+const GOAL_DATE = new Date('2026-12-31');
 
-const CARDS = [
-  { name: 'Chase Business Ink',       type: 'Business', balance: 34924.99, min: 765, limit: 50000, apr: 6.00  },
-  { name: 'Blue Business Plus',       type: 'Business', balance: 12321.59, min: 472, limit: 15000, apr: 5.00  },
-  { name: 'Chase Sapphire Preferred', type: 'Personal', balance:  4183.66, min:  95, limit:  5000, apr: 6.00  },
-  { name: 'Blue Business Cash',       type: 'Business', balance:  1176.85, min:  45, limit: 10000, apr: 5.00  },
-  { name: 'Amex Gold',                type: 'Personal', balance:   729.59, min:  30, limit:  1500, apr: 5.00  },
-  { name: 'Member First (Secured)',   type: 'Personal', balance:     0.00, min:   0, limit:   250, apr: 14.29, closed: true },
-  { name: 'Members Cash Rewards',     type: 'Personal', balance:     0.00, min:   0, limit:  3500, apr: 20.29, closed: true },
-];
-
-const TRANSACTIONS = [
-  { date: '2026-05-28', desc: 'Chase Business Ink — monthly minimum', amount: 765,  type: 'payment'  },
-  { date: '2026-05-28', desc: 'Blue Business Plus — monthly minimum', amount: 472,  type: 'payment'  },
-  { date: '2026-05-28', desc: 'Chase Sapphire — monthly minimum',     amount:  95,  type: 'payment'  },
-  { date: '2026-05-28', desc: 'Blue Business Cash — monthly minimum', amount:  45,  type: 'payment'  },
-  { date: '2026-05-28', desc: 'Amex Gold — monthly minimum',          amount:  30,  type: 'payment'  },
-  { date: '2026-05-06', desc: 'Interest charged — business cards',    amount: 218,  type: 'interest' },
-  { date: '2026-04-28', desc: 'Chase Business Ink — monthly minimum', amount: 765,  type: 'payment'  },
-  { date: '2026-04-28', desc: 'Blue Business Plus — monthly minimum', amount: 472,  type: 'payment'  },
-  { date: '2026-04-28', desc: 'Chase Sapphire — monthly minimum',     amount:  95,  type: 'payment'  },
-  { date: '2026-04-28', desc: 'Blink partnership payment received',   amount: 3000, type: 'income'   },
-  { date: '2026-04-07', desc: 'Interest charged — business cards',    amount: 221,  type: 'interest' },
-];
+/* ================= FALLBACK (if /data.json unavailable) ================= */
+const FALLBACK = {
+  startDebt: 71000,
+  currentDebt: 53336.68,
+  prevDebt: 54183.66,
+  lastUpdated: '2026-05-29',
+  cards: [
+    { name: 'Chase Business Ink',       type: 'Business', balance: 34924.99, min: 765, limit: 50000, apr: 6.00 },
+    { name: 'Blue Business Plus',       type: 'Business', balance: 12321.59, min: 472, limit: 15000, apr: 5.00 },
+    { name: 'Chase Sapphire Preferred', type: 'Personal', balance:  4183.66, min:  95, limit:  5000, apr: 6.00 },
+    { name: 'Blue Business Cash',       type: 'Business', balance:  1176.85, min:  45, limit: 10000, apr: 5.00 },
+    { name: 'Amex Gold',                type: 'Personal', balance:   729.59, min:  30, limit:  1500, apr: 5.00 },
+    { name: 'Member First (Secured)',   type: 'Personal', balance:     0.00, min:   0, limit:   250, apr: 14.29, closed: true },
+    { name: 'Members Cash Rewards',     type: 'Personal', balance:     0.00, min:   0, limit:  3500, apr: 20.29, closed: true },
+  ],
+  transactions: [
+    { date: '2026-05-28', desc: 'Chase Business Ink — monthly minimum', amount: 765,  type: 'payment'  },
+    { date: '2026-05-28', desc: 'Blue Business Plus — monthly minimum', amount: 472,  type: 'payment'  },
+    { date: '2026-05-28', desc: 'Chase Sapphire — monthly minimum',     amount:  95,  type: 'payment'  },
+    { date: '2026-05-28', desc: 'Blue Business Cash — monthly minimum', amount:  45,  type: 'payment'  },
+    { date: '2026-05-28', desc: 'Amex Gold — monthly minimum',          amount:  30,  type: 'payment'  },
+    { date: '2026-05-06', desc: 'Interest charged — business cards',    amount: 218,  type: 'interest' },
+    { date: '2026-04-28', desc: 'Chase Business Ink — monthly minimum', amount: 765,  type: 'payment'  },
+    { date: '2026-04-28', desc: 'Blue Business Plus — monthly minimum', amount: 472,  type: 'payment'  },
+    { date: '2026-04-28', desc: 'Chase Sapphire — monthly minimum',     amount:  95,  type: 'payment'  },
+    { date: '2026-04-28', desc: 'Blink partnership payment received',   amount: 3000, type: 'income'   },
+    { date: '2026-04-07', desc: 'Interest charged — business cards',    amount: 221,  type: 'interest' },
+  ],
+};
 
 /* ================= HELPERS ================= */
 const $ = (sel) => document.querySelector(sel);
@@ -40,23 +42,19 @@ const fmtDate = (iso) => {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 };
 
-/* ================= CALCULATIONS ================= */
-const paidOff  = START_DEBT - CURRENT_DEBT;
-const pct      = (paidOff / START_DEBT) * 100;
-const delta    = PREV_DEBT - CURRENT_DEBT;
-const today    = new Date();
-const daysLeft = Math.max(0, Math.ceil((GOAL_DATE - today) / 86400000));
-const pace     = daysLeft > 0 ? CURRENT_DEBT / daysLeft : CURRENT_DEBT;
-
 /* ================= RENDER: LEDGER ================= */
-function renderLedger() {
-  $('#last-updated').textContent = fmtDate(LAST_UPDATED);
-  $('#delta-badge').textContent = `↓ ${fmtMoney(delta)} since last update`;
-  (function() {
+function renderLedger(d) {
+  const paidOff  = d.startDebt - d.currentDebt;
+  const pct      = (paidOff / d.startDebt) * 100;
+  const delta    = d.prevDebt - d.currentDebt;
+  const daysLeft = Math.max(0, Math.ceil((GOAL_DATE - new Date()) / 86400000));
+
+  $('#last-updated').textContent = fmtDate(d.lastUpdated);
+  $('#delta-badge').textContent  = `↓ ${fmtMoney(delta)} since last update`;
+
+  (function () {
     const el = $('#debt-number');
-    const from = START_DEBT;
-    const to = CURRENT_DEBT;
-    const duration = 1600;
+    const from = d.startDebt, to = d.currentDebt, duration = 1600;
     const ease = t => 1 - Math.pow(1 - t, 3);
     const start = performance.now();
     function tick(now) {
@@ -66,15 +64,13 @@ function renderLedger() {
     }
     requestAnimationFrame(tick);
   })();
-  $('#paid-off').textContent = `−${fmtMoney(paidOff)}`;
 
-  /* progress bar — animate after 300ms */
+  $('#paid-off').textContent    = `−${fmtMoney(paidOff)}`;
   $('#progress-pct').textContent = pct.toFixed(1) + '%';
   setTimeout(() => { $('#progress-fill').style.width = pct.toFixed(1) + '%'; }, 300);
 
-  /* card breakdown — paid measured against card limit as starting point */
-  $('#card-rows').innerHTML = CARDS.map((c) => {
-    const paid = Math.max(0, c.limit - c.balance);
+  $('#card-rows').innerHTML = d.cards.map((c) => {
+    const paid    = Math.max(0, c.limit - c.balance);
     const cardPct = Math.round((paid / c.limit) * 100);
     return `<div class="card-row${c.closed ? ' card-row--closed' : ''}">
       <div class="card-row-top">
@@ -92,19 +88,18 @@ function renderLedger() {
     </div>`;
   }).join('');
 
-  /* transaction feed — 5 most recent */
-  const icons = { payment: '↓', interest: '↑', income: '+' };
-  const recent = [...TRANSACTIONS]
+  const icons  = { payment: '↓', interest: '↑', income: '+', expense: '−' };
+  const recent = [...d.transactions]
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 5);
   $('#txn-rows').innerHTML = recent.map((t) =>
     `<div class="txn-row">
-      <span class="txn-icon ${t.type}">${icons[t.type]}</span>
+      <span class="txn-icon ${t.type}">${icons[t.type] || '·'}</span>
       <span class="txn-body">
         <span class="txn-desc">${t.desc}</span><br>
         <span class="txn-date">${fmtDate(t.date)}</span>
       </span>
-      <span class="txn-amount ${t.type}">${t.type === 'interest' ? '+' : ''}${fmtMoney(t.amount)}</span>
+      <span class="txn-amount ${t.type}">${t.type === 'interest' || t.type === 'expense' ? '+' : ''}${fmtMoney(t.amount)}</span>
     </div>`
   ).join('');
 }
@@ -125,11 +120,11 @@ function wireForms() {
   document.querySelectorAll('.email-form').forEach((form) => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = form.email.value.trim();
+      const email  = form.email.value.trim();
       const source = form.dataset.source;
-      const msg = form.parentElement.querySelector('.form-msg');
-      const btn = form.querySelector('button');
-      btn.disabled = true;
+      const msg    = form.parentElement.querySelector('.form-msg');
+      const btn    = form.querySelector('button');
+      btn.disabled    = true;
       btn.textContent = '...';
       try {
         await subscribe(email, source);
@@ -141,19 +136,20 @@ function wireForms() {
             ? "You're on the list. ⚔️"
             : "You're in. See you Sunday.";
           msg.className = 'form-msg ok';
-          msg.hidden = false;
+          msg.hidden    = false;
           form.reset();
         }
-      } catch (err) {
+      } catch {
         if (msg) {
           msg.textContent = 'Something broke. Try again or DM me @ljrbuilds.';
-          msg.className = 'form-msg err';
-          msg.hidden = false;
+          msg.className   = 'form-msg err';
+          msg.hidden      = false;
         }
       } finally {
-        btn.disabled = false;
-        btn.textContent = form.dataset.source === 'war-chest' ? 'Get Access'
-          : form.dataset.source === 'debt-wars-early' ? "I'm In" : 'Subscribe';
+        btn.disabled    = false;
+        btn.textContent = source === 'war-chest'       ? 'Get Access'
+                        : source === 'debt-wars-early' ? "I'm In"
+                        : 'Subscribe';
       }
     });
   });
@@ -172,13 +168,13 @@ function wireTabs() {
   });
 }
 
-/* ================= WAR CHEST UNLOCK ================= */
+/* ================= WAR CHEST ================= */
 function unlockWarChest() {
   const overlay = document.getElementById('warchest-overlay');
-  const blur = document.querySelector('.warchest-blur');
+  const blur    = document.querySelector('.warchest-blur');
   const success = document.getElementById('warchest-success');
   if (overlay) overlay.style.display = 'none';
-  if (blur) { blur.style.filter = 'none'; blur.style.userSelect = 'auto'; }
+  if (blur)    { blur.style.filter = 'none'; blur.style.userSelect = 'auto'; }
   if (success) success.hidden = false;
 }
 
@@ -186,8 +182,36 @@ function checkWarChestUnlock() {
   if (localStorage.getItem('warchest_unlocked') === '1') unlockWarChest();
 }
 
+/* ================= COPY CODES ================= */
+function wireCopyCodes() {
+  document.querySelectorAll('.copy-code').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const code = btn.dataset.code;
+      navigator.clipboard.writeText(code).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 1800);
+      });
+    });
+  });
+}
+
 /* ================= INIT ================= */
-renderLedger();
-wireForms();
-wireTabs();
-checkWarChestUnlock();
+async function init() {
+  let data = FALLBACK;
+  try {
+    const res = await fetch('/data.json?t=' + Date.now());
+    if (res.ok) data = { ...FALLBACK, ...(await res.json()) };
+  } catch {}
+  renderLedger(data);
+  wireForms();
+  wireTabs();
+  checkWarChestUnlock();
+  wireCopyCodes();
+}
+
+init();

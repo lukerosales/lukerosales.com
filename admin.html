@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ledger Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8f6f2; --text: #0d0d0d; --muted: #6b6760;
+    --red: #cc2222; --green: #16a34a; --border: #d8d4cc;
+    --surface: #f3f0ea; --surface2: #ece8e0;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 14px; line-height: 1.6; }
+
+  #login {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 100vh; gap: 16px; padding: 28px;
+  }
+  #login h1 { font-size: 18px; font-weight: 600; letter-spacing: 0.1em; }
+  #login input { font-family: var(--mono); font-size: 14px; padding: 12px 16px; border: 1px solid var(--border); background: var(--surface); width: 280px; outline: none; }
+  #login input:focus { border-color: var(--text); }
+  #login button { font-family: var(--mono); font-size: 13px; font-weight: 600; padding: 12px 28px; background: var(--text); color: var(--bg); border: none; cursor: pointer; width: 280px; }
+  #login-error { font-size: 12px; color: var(--red); }
+
+  #admin { display: none; max-width: 680px; margin: 0 auto; padding: 40px 28px 100px; }
+  .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 2px solid var(--text); padding-bottom: 16px; }
+  .admin-header h1 { font-size: 16px; font-weight: 600; letter-spacing: 0.12em; }
+  .logout-btn { font-family: var(--mono); font-size: 11px; color: var(--muted); background: none; border: 1px solid var(--border); padding: 6px 12px; cursor: pointer; }
+
+  .section { margin-bottom: 48px; }
+  .section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+
+  .field-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .field-row label { font-size: 12px; color: var(--muted); min-width: 120px; }
+  .field-row input { font-family: var(--mono); font-size: 13px; padding: 8px 12px; border: 1px solid var(--border); background: var(--surface); flex: 1; outline: none; }
+  .field-row input:focus { border-color: var(--text); }
+
+  .card-field { padding: 14px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 16px; }
+  .card-field-name { flex: 1; font-size: 13px; font-weight: 500; }
+  .card-field-meta { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .card-field input { font-family: var(--mono); font-size: 13px; padding: 8px 12px; border: 1px solid var(--border); background: var(--surface); width: 140px; outline: none; }
+  .card-field input:focus { border-color: var(--text); }
+  .card-field input[readonly] { color: var(--muted); background: var(--surface2); }
+  .closed-badge { font-size: 9px; color: var(--green); border: 1px solid var(--green); padding: 2px 6px; white-space: nowrap; }
+
+  .txn-add { display: grid; grid-template-columns: 140px 1fr 110px 130px auto; gap: 8px; margin-bottom: 20px; align-items: center; }
+  .txn-add input, .txn-add select { font-family: var(--mono); font-size: 12px; padding: 8px 10px; border: 1px solid var(--border); background: var(--surface); outline: none; }
+  .txn-add input:focus, .txn-add select:focus { border-color: var(--text); }
+  .txn-add button { font-family: var(--mono); font-size: 12px; font-weight: 600; padding: 8px 14px; background: var(--text); color: var(--bg); border: none; cursor: pointer; white-space: nowrap; }
+
+  .txn-row { display: grid; grid-template-columns: 100px 90px 1fr 90px 32px; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+  .txn-type { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 6px; border: 1px solid; white-space: nowrap; }
+  .txn-type.payment  { color: var(--green); border-color: var(--green); }
+  .txn-type.income   { color: #2563eb; border-color: #2563eb; }
+  .txn-type.interest { color: var(--red);   border-color: var(--red);   }
+  .txn-type.expense  { color: var(--muted); border-color: var(--muted); }
+  .txn-desc-cell { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .txn-amt { font-weight: 600; text-align: right; }
+  .del-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-size: 14px; cursor: pointer; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
+  .del-btn:hover { border-color: var(--red); color: var(--red); }
+
+  .save-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--border); padding: 16px 28px; display: flex; align-items: center; gap: 20px; }
+  #save-btn { font-family: var(--mono); font-size: 13px; font-weight: 600; padding: 12px 32px; background: var(--text); color: var(--bg); border: none; cursor: pointer; }
+  #save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  #save-status { font-size: 12px; }
+  #save-status.ok  { color: var(--green); }
+  #save-status.err { color: var(--red); }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <h1>LEDGER ADMIN ⚔️</h1>
+  <input type="password" id="pw-input" placeholder="password" autocomplete="current-password">
+  <button onclick="login()">Enter</button>
+  <p id="login-error" style="display:none;font-size:12px;color:#cc2222;">Wrong password.</p>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin">
+  <div class="admin-header">
+    <h1>LEDGER ADMIN ⚔️</h1>
+    <button class="logout-btn" onclick="logout()">Log out</button>
+  </div>
+
+  <!-- DEBT OVERVIEW -->
+  <div class="section">
+    <p class="section-label">Debt Overview</p>
+    <div class="field-row">
+      <label>Current Debt</label>
+      <input type="number" id="f-currentDebt" step="0.01" min="0" placeholder="53336.68">
+    </div>
+    <div class="field-row">
+      <label>Previous Debt</label>
+      <input type="number" id="f-prevDebt" step="0.01" min="0" placeholder="54183.66">
+    </div>
+    <div class="field-row">
+      <label>Last Updated</label>
+      <input type="date" id="f-lastUpdated">
+    </div>
+  </div>
+
+  <!-- CARD BALANCES -->
+  <div class="section">
+    <p class="section-label">Card Balances</p>
+    <div id="card-fields"></div>
+  </div>
+
+  <!-- TRANSACTIONS -->
+  <div class="section">
+    <p class="section-label">Transactions</p>
+    <div class="txn-add">
+      <input type="date" id="new-date">
+      <input type="text" id="new-desc" placeholder="Description">
+      <input type="number" id="new-amount" step="0.01" min="0" placeholder="Amount">
+      <select id="new-type">
+        <option value="payment">Payment</option>
+        <option value="income">Income</option>
+        <option value="interest">Interest</option>
+        <option value="expense">Expense</option>
+      </select>
+      <button onclick="addTransaction()">+ Add</button>
+    </div>
+    <div id="txn-list"></div>
+  </div>
+</div>
+
+<!-- SAVE BAR -->
+<div class="save-bar" id="save-bar" style="display:none;">
+  <button id="save-btn" onclick="save()">Save Changes</button>
+  <span id="save-status"></span>
+</div>
+
+<script>
+let adminPw = '';
+let adminData = null;
+
+async function login() {
+  const pw = document.getElementById('pw-input').value.trim();
+  if (!pw) return;
+  adminPw = pw;
+
+  const res = await fetch('/data.json?t=' + Date.now());
+  if (!res.ok) { alert('Failed to load data.'); return; }
+  adminData = await res.json();
+
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('admin').style.display = 'block';
+  document.getElementById('save-bar').style.display = 'flex';
+  populateForm();
+}
+
+function logout() {
+  adminPw = '';
+  adminData = null;
+  document.getElementById('login').style.display = 'flex';
+  document.getElementById('admin').style.display = 'none';
+  document.getElementById('save-bar').style.display = 'none';
+  document.getElementById('pw-input').value = '';
+}
+
+document.getElementById('pw-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') login();
+});
+
+function populateForm() {
+  document.getElementById('f-currentDebt').value = adminData.currentDebt;
+  document.getElementById('f-prevDebt').value    = adminData.prevDebt;
+  document.getElementById('f-lastUpdated').value = adminData.lastUpdated;
+
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById('new-date').value = today;
+
+  renderCardFields();
+  renderTransactionList();
+}
+
+function renderCardFields() {
+  document.getElementById('card-fields').innerHTML = adminData.cards.map((c, i) => `
+    <div class="card-field">
+      <div style="flex:1">
+        <div class="card-field-name">${c.name}${c.closed ? ' <span class="closed-badge">CLOSED</span>' : ''}</div>
+        <div class="card-field-meta">${c.type} · $${c.limit.toLocaleString()} limit · ${c.apr}% APR</div>
+      </div>
+      <input type="number" step="0.01" min="0"
+             value="${c.balance.toFixed(2)}"
+             data-card-index="${i}"
+             class="card-balance-input"
+             ${c.closed ? 'readonly' : ''}>
+    </div>
+  `).join('');
+}
+
+function renderTransactionList() {
+  const sorted = adminData.transactions
+    .map((t, i) => ({ ...t, _i: i }))
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  document.getElementById('txn-list').innerHTML = sorted.length === 0
+    ? '<p style="color:var(--muted);font-size:12px;padding:12px 0;">No transactions yet.</p>'
+    : sorted.map(t => `
+      <div class="txn-row">
+        <span style="font-size:12px;color:var(--muted)">${t.date}</span>
+        <span class="txn-type ${t.type}">${t.type}</span>
+        <span class="txn-desc-cell">${t.desc}</span>
+        <span class="txn-amt">$${Number(t.amount).toLocaleString()}</span>
+        <button class="del-btn" onclick="deleteTxn(${t._i})">×</button>
+      </div>
+    `).join('');
+}
+
+function deleteTxn(index) {
+  adminData.transactions.splice(index, 1);
+  renderTransactionList();
+}
+
+function addTransaction() {
+  const date   = document.getElementById('new-date').value;
+  const desc   = document.getElementById('new-desc').value.trim();
+  const amount = parseFloat(document.getElementById('new-amount').value);
+  const type   = document.getElementById('new-type').value;
+
+  if (!date || !desc || isNaN(amount) || amount <= 0) {
+    alert('Fill in date, description, and amount.');
+    return;
+  }
+
+  adminData.transactions.push({ date, desc, amount, type });
+  document.getElementById('new-desc').value   = '';
+  document.getElementById('new-amount').value = '';
+  renderTransactionList();
+}
+
+async function save() {
+  adminData.currentDebt  = parseFloat(document.getElementById('f-currentDebt').value);
+  adminData.prevDebt     = parseFloat(document.getElementById('f-prevDebt').value);
+  adminData.lastUpdated  = document.getElementById('f-lastUpdated').value;
+
+  document.querySelectorAll('.card-balance-input').forEach(input => {
+    const i = parseInt(input.dataset.cardIndex);
+    if (!adminData.cards[i].closed) {
+      adminData.cards[i].balance = parseFloat(input.value) || 0;
+    }
+  });
+
+  const btn    = document.getElementById('save-btn');
+  const status = document.getElementById('save-status');
+  btn.disabled    = true;
+  btn.textContent = 'Saving...';
+  status.textContent = '';
+  status.className   = '';
+
+  try {
+    const res = await fetch('/api/admin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: adminPw, data: adminData }),
+    });
+
+    if (res.status === 401) {
+      status.textContent = 'Wrong password.';
+      status.className   = 'err';
+      return;
+    }
+    if (!res.ok) throw new Error();
+
+    status.textContent = 'Saved. Site updates in ~30 seconds.';
+    status.className   = 'ok';
+  } catch {
+    status.textContent = 'Error. Check your connection and try again.';
+    status.className   = 'err';
+  } finally {
+    btn.disabled    = false;
+    btn.textContent = 'Save Changes';
+  }
+}
+</script>
+</body>
+</html>

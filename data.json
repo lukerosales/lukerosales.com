@@ -1,0 +1,28 @@
+{
+  "startDebt": 71000,
+  "currentDebt": 53336.68,
+  "prevDebt": 54183.66,
+  "lastUpdated": "2026-05-29",
+  "cards": [
+    { "name": "Chase Business Ink",       "type": "Business", "balance": 34924.99, "min": 765, "limit": 50000, "apr": 6.00 },
+    { "name": "Blue Business Plus",       "type": "Business", "balance": 12321.59, "min": 472, "limit": 15000, "apr": 5.00 },
+    { "name": "Chase Sapphire Preferred", "type": "Personal", "balance":  4183.66, "min":  95, "limit":  5000, "apr": 6.00 },
+    { "name": "Blue Business Cash",       "type": "Business", "balance":  1176.85, "min":  45, "limit": 10000, "apr": 5.00 },
+    { "name": "Amex Gold",                "type": "Personal", "balance":   729.59, "min":  30, "limit":  1500, "apr": 5.00 },
+    { "name": "Member First (Secured)",   "type": "Personal", "balance":     0.00, "min":   0, "limit":   250, "apr": 14.29, "closed": true },
+    { "name": "Members Cash Rewards",     "type": "Personal", "balance":     0.00, "min":   0, "limit":  3500, "apr": 20.29, "closed": true }
+  ],
+  "transactions": [
+    { "date": "2026-05-28", "desc": "Chase Business Ink — monthly minimum", "amount": 765,  "type": "payment"  },
+    { "date": "2026-05-28", "desc": "Blue Business Plus — monthly minimum", "amount": 472,  "type": "payment"  },
+    { "date": "2026-05-28", "desc": "Chase Sapphire — monthly minimum",     "amount":  95,  "type": "payment"  },
+    { "date": "2026-05-28", "desc": "Blue Business Cash — monthly minimum", "amount":  45,  "type": "payment"  },
+    { "date": "2026-05-28", "desc": "Amex Gold — monthly minimum",          "amount":  30,  "type": "payment"  },
+    { "date": "2026-05-06", "desc": "Interest charged — business cards",    "amount": 218,  "type": "interest" },
+    { "date": "2026-04-28", "desc": "Chase Business Ink — monthly minimum", "amount": 765,  "type": "payment"  },
+    { "date": "2026-04-28", "desc": "Blue Business Plus — monthly minimum", "amount": 472,  "type": "payment"  },
+    { "date": "2026-04-28", "desc": "Chase Sapphire — monthly minimum",     "amount":  95,  "type": "payment"  },
+    { "date": "2026-04-28", "desc": "Blink partnership payment received",   "amount": 3000, "type": "income"   },
+    { "date": "2026-04-07", "desc": "Interest charged — business cards",    "amount": 221,  "type": "interest" }
+  ]
+}
