@@ -519,19 +519,45 @@ h2 {
 .link-arrow { font-size: 11px; color: var(--muted); }
 
 /* ============ THE ARSENAL ============ */
-.arsenal-grid { display: grid; gap: 18px; }
-@media (min-width: 520px) { .arsenal-grid { grid-template-columns: 1fr 1fr; } }
+.arsenal-grid { display: grid; gap: 20px; }
 .arsenal-card {
   border: 1px solid var(--border);
   background: var(--surface);
-  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.affiliate-img-wrap {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.affiliate-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.affiliate-body {
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: flex-start;
 }
+.affiliate-code {
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
 .arsenal-name { font-family: var(--cond); font-weight: 700; font-size: 24px; }
-.arsenal-desc { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.arsenal-desc { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
 
 /* ============ DEBT WARS ============ */
 .debtwars {
@@ -644,8 +670,8 @@ h2 {
   /* Hero: tighter photo, less margin */
   .hero-photo { width: 96px; height: 96px; margin-bottom: 20px; }
 
-  /* Arsenal cards: tighter padding */
-  .arsenal-card { padding: 18px 16px; }
+  /* Arsenal cards: tighter body padding on mobile */
+  .affiliate-body { padding: 16px; }
 
   /* Debt Wars title */
   .dw-title { font-size: 42px; }
