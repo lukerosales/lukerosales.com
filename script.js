@@ -6,12 +6,12 @@ const LAST_UPDATED = '2026-05-29';
 const GOAL_DATE    = new Date('2026-12-31');
 
 const CARDS = [
-  { name: 'Chase Business Ink',       type: 'Business', balance: 34924.99, min: 765, limit: 50000 },
-  { name: 'Blue Business Plus',       type: 'Business', balance: 12321.59, min: 472, limit: 15000 },
-  { name: 'Chase Sapphire Preferred', type: 'Personal', balance:  4183.66, min:  95, limit:  5000 },
-  { name: 'Blue Business Cash',       type: 'Business', balance:  1176.85, min:  45, limit: 10000 },
-  { name: 'Amex Gold',                type: 'Personal', balance:   729.59, min:  30, limit:  1500 },
-  { name: 'Members Cash Rewards',    type: 'Personal', balance:     0.00, min:   0, limit:  3500, closed: true },
+  { name: 'Chase Business Ink',       type: 'Business', balance: 34924.99, min: 765, limit: 50000, apr: 6.00  },
+  { name: 'Blue Business Plus',       type: 'Business', balance: 12321.59, min: 472, limit: 15000, apr: 5.00  },
+  { name: 'Chase Sapphire Preferred', type: 'Personal', balance:  4183.66, min:  95, limit:  5000, apr: 6.00  },
+  { name: 'Blue Business Cash',       type: 'Business', balance:  1176.85, min:  45, limit: 10000, apr: 5.00  },
+  { name: 'Amex Gold',                type: 'Personal', balance:   729.59, min:  30, limit:  1500, apr: 5.00  },
+  { name: 'Members Cash Rewards',     type: 'Personal', balance:     0.00, min:   0, limit:  3500, apr: 20.29, closed: true },
 ];
 
 const TRANSACTIONS = [
@@ -77,7 +77,7 @@ function renderLedger() {
     const cardPct = Math.round((paid / c.limit) * 100);
     return `<div class="card-row${c.closed ? ' card-row--closed' : ''}">
       <div class="card-row-top">
-        <span class="card-name">${c.name}</span>
+        <span class="card-name">${c.name}${c.apr != null && !c.closed ? ` <span class="card-apr">${c.apr}% APR</span>` : ''}</span>
         <span class="card-type">${c.closed ? 'CLOSED ✓' : c.type}</span>
       </div>
       <div class="card-bar-wrap">

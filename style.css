@@ -327,6 +327,7 @@ h2 {
   margin-bottom: 8px;
 }
 .card-name { font-size: 13px; font-weight: 600; flex: 1; }
+.card-apr { font-size: 10px; font-weight: 600; color: var(--red); letter-spacing: 0.04em; margin-left: 6px; vertical-align: middle; }
 .card-type {
   font-size: 9px;
   text-transform: uppercase;
