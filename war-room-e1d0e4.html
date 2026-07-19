@@ -177,7 +177,8 @@
     <p class="section-label">Transactions</p>
     <div class="add-form">
       <input type="date" id="new-date">
-      <input type="text"   id="new-desc"   placeholder="Description">
+      <input type="text"   id="new-desc"   placeholder="Pick or type a card" list="desc-options" autocomplete="off">
+      <datalist id="desc-options"></datalist>
       <input type="number" id="new-amount" step="0.01" min="0" placeholder="Amount">
       <select id="new-type">
         <option value="payment">Payment</option>
@@ -260,8 +261,26 @@ function populate() {
   document.getElementById('f-prev').value    = data.prevDebt;
   document.getElementById('f-date').value    = data.lastUpdated;
   document.getElementById('new-date').value  = new Date().toISOString().slice(0, 10);
+  buildDescOptions();
   renderCards();
   renderTxns();
+}
+
+// Build the Description dropdown from the live card list (active cards first)
+// plus a few common non-card entries. Field stays typeable for custom notes.
+function buildDescOptions() {
+  const cardNames = data.cards
+    .filter(c => !c.closed)
+    .map(c => c.name);
+  const presets = [
+    ...cardNames,
+    'Interest charged — business cards',
+    'Brand deal payment received',
+    'Extra payment',
+  ];
+  const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  document.getElementById('desc-options').innerHTML =
+    presets.map(p => `<option value="${esc(p)}"></option>`).join('');
 }
 
 function renderCards() {
