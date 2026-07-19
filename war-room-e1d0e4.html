@@ -62,6 +62,8 @@
     border: 1px solid var(--border); background: var(--surface); flex: 1; outline: none;
   }
   .row input:focus { border-color: var(--text); }
+  .row input[readonly] { background: var(--surface2); color: var(--text); font-weight: 600; cursor: default; }
+  .auto-note { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
 
   .card-row {
     display: flex; align-items: center; gap: 14px;
@@ -156,16 +158,9 @@
     <p class="section-label">Debt Overview</p>
     <div class="row">
       <label>Current Debt ($)</label>
-      <input type="number" id="f-current" step="0.01" min="0">
+      <input type="number" id="f-current" step="0.01" readonly>
     </div>
-    <div class="row">
-      <label>Previous Debt ($)</label>
-      <input type="number" id="f-prev" step="0.01" min="0">
-    </div>
-    <div class="row">
-      <label>Last Updated</label>
-      <input type="date" id="f-date">
-    </div>
+    <p class="auto-note">Auto-added from your card balances below. Previous total and today's date are saved automatically — no typing needed.</p>
   </div>
 
   <div class="section">
@@ -257,13 +252,21 @@ function logout() {
 document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
 
 function populate() {
-  document.getElementById('f-current').value = data.currentDebt;
-  document.getElementById('f-prev').value    = data.prevDebt;
-  document.getElementById('f-date').value    = data.lastUpdated;
   document.getElementById('new-date').value  = new Date().toISOString().slice(0, 10);
   buildDescOptions();
   renderCards();
   renderTxns();
+  recalcTotal();
+}
+
+// Current Debt = live sum of every card balance in the form. Read-only display;
+// updates the moment a card balance changes. This is the single source of truth.
+function recalcTotal() {
+  let total = 0;
+  document.querySelectorAll('.bal-input').forEach(inp => {
+    total += parseFloat(inp.value) || 0;
+  });
+  document.getElementById('f-current').value = (Math.round(total * 100) / 100).toFixed(2);
 }
 
 // Build the Description dropdown from the live card list (active cards first)
@@ -296,6 +299,9 @@ function renderCards() {
              ${c.closed ? 'readonly' : ''}>
     </div>
   `).join('');
+  // Recalculate the Current Debt total live as any card balance is edited.
+  document.querySelectorAll('.bal-input').forEach(inp =>
+    inp.addEventListener('input', recalcTotal));
 }
 
 function renderTxns() {
@@ -333,14 +339,19 @@ function addTxn() {
 }
 
 async function save() {
-  data.currentDebt = parseFloat(document.getElementById('f-current').value) || 0;
-  data.prevDebt    = parseFloat(document.getElementById('f-prev').value)    || 0;
-  data.lastUpdated = document.getElementById('f-date').value;
-
+  // 1. Pull the (possibly edited) card balances into data.
   document.querySelectorAll('.bal-input').forEach(inp => {
     const i = parseInt(inp.dataset.idx);
     if (!data.cards[i].closed) data.cards[i].balance = parseFloat(inp.value) || 0;
   });
+
+  // 2. Auto-derive everything else — no manual typing:
+  //    previous = the total from the last save, current = fresh sum of cards,
+  //    date = today.
+  const newTotal = data.cards.reduce((sum, c) => sum + (Number(c.balance) || 0), 0);
+  data.prevDebt    = data.currentDebt;                       // last saved total
+  data.currentDebt = Math.round(newTotal * 100) / 100;       // live sum of cards
+  data.lastUpdated = new Date().toISOString().slice(0, 10);  // today
 
   const btn = document.getElementById('save-btn');
   const st  = document.getElementById('status');
