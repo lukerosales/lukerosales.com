@@ -201,11 +201,19 @@ function wireCopyCodes() {
 }
 
 /* ================= INIT ================= */
+// Data priority: War Room saves (KV via /api/data) → static data.json backup →
+// hardcoded FALLBACK. Luke edits day-to-day through the War Room panel, which
+// writes to KV, so /api/data is authoritative. data.json is a code-side backup.
 async function init() {
   let data = FALLBACK;
   try {
-    const res = await fetch('/api/data');
-    if (res.ok) data = { ...FALLBACK, ...(await res.json()) };
+    const res = await fetch('/api/data', { cache: 'no-store' });
+    if (res.ok) {
+      data = { ...FALLBACK, ...(await res.json()) };
+    } else {
+      const backup = await fetch('/data.json', { cache: 'no-store' });
+      if (backup.ok) data = { ...FALLBACK, ...(await backup.json()) };
+    }
   } catch {}
   renderLedger(data);
   wireForms();
