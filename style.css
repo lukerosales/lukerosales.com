@@ -664,6 +664,45 @@ h2 {
 .social-name { font-family: var(--cond); font-weight: 700; font-size: 19px; }
 .social-handle { font-size: 11px; color: var(--muted); }
 
+/* ============ JOIN / EMAIL CAPTURE ============ */
+.join {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 52px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.join-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.join-title {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.05;
+  margin-bottom: 14px;
+  max-width: 600px;
+}
+.join-text {
+  font-size: 14px;
+  color: var(--text);
+  max-width: 440px;
+  margin-bottom: 22px;
+}
+.join-proof {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 14px;
+}
+
 /* ============ FOOTER ============ */
 .footer-capture {
   border-top: 1px solid var(--border);
@@ -724,6 +763,20 @@ h2 {
 
   /* Ledger: tighten delta badge line */
   .live-updated { font-size: 10px; }
+
+  /* Breakdown by Card: compact rows on mobile (was oversized) */
+  .cards-section { margin-bottom: 28px; }
+  .card-row { padding: 9px 0; }
+  .card-row-top { margin-bottom: 5px; gap: 6px; }
+  .card-name { font-size: 12px; }
+  .card-apr { font-size: 9px; margin-left: 4px; }
+  .card-bar-wrap { margin-bottom: 4px; gap: 8px; }
+  .card-bar { height: 5px; }
+  .card-amounts { font-size: 10px; }
+
+  /* Join capture: tighten on mobile */
+  .join { padding-top: 40px; padding-bottom: 40px; }
+  .join-title { font-size: 27px; }
 }
 
 /* Narrow — email forms stack full-width */
