@@ -15,7 +15,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background: var(--bg);
@@ -26,6 +26,7 @@ body {
   max-width: 640px;
   margin: 0 auto;
   position: relative;
+  overflow-x: hidden;      /* hard guard: page can never side-scroll */
 }
 
 /* grain overlay */
@@ -503,7 +504,11 @@ h2 {
   gap: 0;
   border-bottom: 1px solid var(--border);
   margin-bottom: 28px;
+  overflow-x: auto;                    /* tabs scroll inside their strip... */
+  -webkit-overflow-scrolling: touch;   /* ...instead of stretching the page */
+  scrollbar-width: none;               /* hide scrollbar (Firefox) */
 }
+.tab-nav::-webkit-scrollbar { display: none; }  /* hide scrollbar (Safari/Chrome) */
 .tab-btn {
   font-family: var(--mono);
   font-size: 11px;
@@ -517,6 +522,8 @@ h2 {
   color: var(--muted);
   cursor: pointer;
   margin-bottom: -1px;
+  flex-shrink: 0;          /* don't squish tabs on narrow screens */
+  white-space: nowrap;
   transition: color 0.12s ease, border-color 0.12s ease;
 }
 .tab-btn.active { color: var(--text); border-bottom-color: var(--text); }
