@@ -95,19 +95,26 @@ h2 {
   text-decoration: none;
 }
 .nav-brand span { color: var(--text); }
-.nav-right { display: flex; align-items: center; gap: 18px; }
+.nav-right { display: flex; align-items: center; gap: 16px; }
 .nav-link {
   font-family: var(--mono);
   font-size: 12px;
   font-weight: 600;
   color: var(--text);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1.5px;
+  padding: 8px 2px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
-.nav-link:hover { opacity: 0.6; }
+.nav-link:hover { color: var(--blue); }
 .nav-cta {
   font-size: 11px;
   font-weight: 600;
-  color: var(--text);
+  color: var(--bg);
+  background: var(--text);
   text-decoration: none;
   border: 1px solid var(--text);
   padding: 10px 14px;
@@ -115,7 +122,7 @@ h2 {
   display: flex;
   align-items: center;
 }
-.nav-cta:hover { background: var(--text); color: var(--bg); }
+.nav-cta:hover { opacity: 0.85; }
 
 /* ============ HERO ============ */
 .hero {
