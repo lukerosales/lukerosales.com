@@ -155,6 +155,19 @@ function wireForms() {
   });
 }
 
+/* ================= TABS ================= */
+function wireTabs() {
+  document.querySelectorAll('.tab-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + target).classList.add('active');
+    });
+  });
+}
+
 /* ================= WAR CHEST ================= */
 function unlockWarChest() {
   const overlay = document.getElementById('warchest-overlay');
@@ -207,6 +220,7 @@ async function init() {
     renderLedger(data);
   }
   wireForms();
+  wireTabs();
   checkWarChestUnlock();
   wireCopyCodes();
 }
