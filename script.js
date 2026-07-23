@@ -155,19 +155,6 @@ function wireForms() {
   });
 }
 
-/* ================= TABS ================= */
-function wireTabs() {
-  document.querySelectorAll('.tab-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('tab-' + target).classList.add('active');
-    });
-  });
-}
-
 /* ================= WAR CHEST ================= */
 function unlockWarChest() {
   const overlay = document.getElementById('warchest-overlay');
@@ -205,19 +192,21 @@ function wireCopyCodes() {
 // hardcoded FALLBACK. Luke edits day-to-day through the War Room panel, which
 // writes to KV, so /api/data is authoritative. data.json is a code-side backup.
 async function init() {
-  let data = FALLBACK;
-  try {
-    const res = await fetch('/api/data', { cache: 'no-store' });
-    if (res.ok) {
-      data = { ...FALLBACK, ...(await res.json()) };
-    } else {
-      const backup = await fetch('/data.json', { cache: 'no-store' });
-      if (backup.ok) data = { ...FALLBACK, ...(await backup.json()) };
-    }
-  } catch {}
-  renderLedger(data);
+  // Ledger only lives on the home page — skip the fetch/render elsewhere (e.g. about.html).
+  if (document.getElementById('debt-number')) {
+    let data = FALLBACK;
+    try {
+      const res = await fetch('/api/data', { cache: 'no-store' });
+      if (res.ok) {
+        data = { ...FALLBACK, ...(await res.json()) };
+      } else {
+        const backup = await fetch('/data.json', { cache: 'no-store' });
+        if (backup.ok) data = { ...FALLBACK, ...(await backup.json()) };
+      }
+    } catch {}
+    renderLedger(data);
+  }
   wireForms();
-  wireTabs();
   checkWarChestUnlock();
   wireCopyCodes();
 }
